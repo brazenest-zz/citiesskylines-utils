@@ -1,7 +1,7 @@
 /**
  * @name SkylinesCurveCalculator
  * @overview Calculates the minimum length of roadway needed to meet real-world safety-and-comfort standards for horizontal curves in the Cities: Skylines city network simulation game.
- * @version 1.0.0.20190321-0
+ * @version 1.0.0.20190322.0
  * @author Alden Gillespy
  * @copyright 2019 Alden Gillespy
  * @license MPL-2.0
@@ -10,8 +10,12 @@
  *
  * Hi! How to use:
  *
- * 1. Define your curve using the parameters below.
- * 2. Run it by `node skylines-curve-calculator.js`
+ * 1. Define your curve in terms of:
+ *      - angle (in degrees)
+ *      - design speed (in kmph)
+ *      - (optionally) a specific side-friction factor (default is 0.14).
+ * 2. Set your values by running the script on your command-line using this structure:
+ *      `node skylines-curve-calculator.js {curveAngleDegrees} {curveDesignSpeedKmph} [ {curveSideFrictionFactor} ]`
  * 3. ???
  * 4. $$$$$
  *
@@ -25,22 +29,12 @@
 /**
  * @constant {number}
  * @default */
-const curveAngleDegrees = 55
+const DEFAULT_ANGLE_DEGREES = 55
 
 /**
  * @constant {number}
  * @default */
-const curveDesignSpeedKmph = 100
-
-/**
- * @constant {number}
- * @default DEFAULT_SIDEFRICTION_FACTOR
- */
-const curveSideFrictionFactor = DEFAULT_SIDEFRICTION_FACTOR
-
-/*****************************************************************************************
-Don't change anything below this line!
-*/
+const DEFAULT_DESIGNSPEED_KMPH = 100
 
 /**
  * @constant {number}
@@ -52,11 +46,10 @@ const DEFAULT_SIDEFRICTION_FACTOR = 0.14
  * @default */
 const DEFAULT_SUPERELEVATION_RATE = 0
 
-/**
- * @constant {number}
- * @default DEFAULT_SUPERELEVATION_RATE
- */
-const curveSuperelevationRate = DEFAULT_SUPERELEVATION_RATE
+const curveAngleDegrees = parseFloat(process.argv[2] || DEFAULT_ANGLE_DEGREES, 10)
+const curveDesignSpeedKmph = parseFloat(process.argv[3] || DEFAULT_DESIGNSPEED_KMPH, 10)
+const curveSideFrictionFactor = parseFloat(process.argv[4] || DEFAULT_SIDEFRICTION_FACTOR, 10)
+const curveSuperelevationRate = parseFloat(process.argv[5] || DEFAULT_SUPERELEVATION_RATE, 10)
 
 const PI = 3.14159
 const MAX_RADIANS = 2 * PI
